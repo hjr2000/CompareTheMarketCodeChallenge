@@ -37,4 +37,4 @@ Scenario: Running a test against Compare the Market
 # Commonly used standard data e.g. postcode hived off into a properties file.
 # Reliability - this test is 100% reliable it seems, not an easy feat to achieve with Selenium. Why Se? x-browser. Can use with Bstack (inc devices etc), Applitools
 # Plug in Selenide - makes Selenium actually usable.
-# Explanation of the utilities etc, deal with common pain in the backside Selenium problems.
+# Explanation of the utilities etc, deal with common pain in the backside Selenium problems. Unused methods part of my 'reference' repo.
