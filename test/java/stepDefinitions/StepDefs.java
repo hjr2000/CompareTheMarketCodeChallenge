@@ -2,13 +2,11 @@ package stepDefinitions;
 
 import io.cucumber.java.After;
 import io.cucumber.java.en.And;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import helperClasses.HelperClass;
+import org.openqa.selenium.WebDriver;
 import pageObjects.*;
 import utilities.StartupTearDown;
 import utilities.Utilities;
@@ -22,6 +20,7 @@ public class StepDefs {
 	private Utilities utilities;
 	private EnergyJourneyHomepage energyJourneyHomepage;
 	private ElectricitySupplierPage electricitySupplierPage;
+	private YourDetailsPage yourDetailsPage;
 	
 	//Variable shared between step defs
 	private String webpageTitle;	
@@ -33,6 +32,7 @@ public class StepDefs {
 		helperClass = new HelperClass(_driver);
 		energyJourneyHomepage = new EnergyJourneyHomepage(_driver);
 		electricitySupplierPage = new ElectricitySupplierPage(_driver);
+		yourDetailsPage = new YourDetailsPage(_driver);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////
@@ -40,18 +40,21 @@ public class StepDefs {
 	///////////////////////////////////////////////////////////////////////////////////
 	
 	@Given("^I am on the google homepage$")
-	public void i_am_on_the_google_homepage() throws Throwable {
+	public void i_am_on_the_google_homepage() {
+
 		helperClass.goToGoogleHomePage();
 		webpageTitle = new GooglePage(_driver).getPageTitle();
 	}
 
 	@When("^I search for webdriver$")
-	public void i_search_for_webdriver() throws Throwable {
+	public void i_search_for_webdriver() {
+
 		helperClass.searchFor("webdriver");
 	}
 	
 	@Then("^the page title is as expected$")
 	public void the_page_title_is_as_expected() throws Throwable {
+
 		utilities.waitForWebPageTitleToChangeFromOriginal(webpageTitle);
 		helperClass.checkPageTitle();
 	}
@@ -111,51 +114,43 @@ public class StepDefs {
 	@And("I select Fixed Tariff")
 	public void iSelectFixedTariff() {
 
-		driver.findElement(By.cssSelector("#EnergyComparison_YourDetails_YourPreferences_WhatTariffAreYouInterestedIn label")).click();
+		yourDetailsPage.selectFixedTariff();
 	}
 
 	@And("I select Monthly Direct Debit")
 	public void iSelectMonthlyDirectDebit() {
 
-		driver.findElement(By.cssSelector("#EnergyComparison_YourDetails_YourPreferences_HowDoYouWantToPayForYourEnergy label")).click();
+		yourDetailsPage.selectMonthlyDirectDebit();
 	}
 
 	@And("I enter {string} as my email address")
 	public void iEnterAsMyEmailAddress(String emailAddress) {
 
-		driver.findElement(By.cssSelector("#EnergyComparison_YourDetails_YourContactDetails_WhatIsYourEmailAddress")).sendKeys("" + emailAddress);
+		yourDetailsPage.enterEmailAdddress(emailAddress);
 	}
 
 	@And("I select Do Not Contact as my contact preference")
 	public void iSelectDoNotContactAsMyContactPreference() {
 
-		driver.findElement(By.cssSelector("#EnergyComparison_YourDetails_YourContactDetails_LetUsKeepYouUpToDate div:nth-of-type(5)")).click();
+		yourDetailsPage.selectDoNotContact();
 	}
 
 	@And("I select the Confirm check box if required")
 	public void iSelectTheConfirmCheckBox() throws InterruptedException {
 
-		// Detect if the confirm checkbox is present and click it if so
-		// Presence of the confirm checkbox seems fairly random
-		if (Utilities.doesElementExist(By.id("IConfirm"), 500))
-		{
-			driver.findElement(By.cssSelector("#IConfirm div:nth-of-type(2) label")).click();
-			System.out.println("Confirm checkbox detected - has been ticked");
-		}
+		yourDetailsPage.selectConfirmCheckboxIfRequired();
 	}
 
 	@And("I click the Go To Prices button")
 	public void iClickTheGoToPricesButton() throws Exception {
 
-		driver.findElement(By.cssSelector("#EnergyComparison_YourDetails_GoToPrices")).click();
-		Utilities.waitForElementToExistUsesID("EnergyComparison_YourResults_Summary_EditElectricitySupplier");
-		Utilities.waitForElementToBeClickableSafe(driver.findElement(By.cssSelector("#EnergyComparison_YourResults_Summary_EditElectricitySupplier")));
+		yourDetailsPage.clickGoToPricesButton();
 	}
 
 	@Then("I see that the section titled {string} is present")
 	public void iSeeThatTheSectionTitledIsPresent(String textToFind) throws Exception {
 
-		Utilities.waitforTextToAppear("Cheapest switchable tariff");
+		Utilities.waitforTextToAppear(textToFind);
 	}
 
 	// The 'After' hook must be here in the StepDefs file or CucumberJVM will ignore it!

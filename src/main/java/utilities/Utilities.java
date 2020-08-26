@@ -1,15 +1,13 @@
 package utilities;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.openqa.selenium.*;
-
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pageObjects.GooglePage;
-import java.util.ArrayList;
-import java.util.List;
-
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 
@@ -65,21 +63,21 @@ public class Utilities {
     }
 
 	public static void waitForElementToBeClickableSafe(WebElement element) throws Exception {
+
         waitForElementToBeClickableSafe(element, 10);
     }
 
     public static void waitForElementToBeClickableSafe(WebElement element, int waitTimeInSeconds) throws Exception
     {
+
         int count = 0;
         boolean continueOn = false;
         while (!continueOn)
         {
             try
             {
-                //log.info(("*** About to perform wait. Count =  " + count));
                 waitForWebElementToBeClickable(element, waitTimeInSeconds);
 
-                //log.info(("*** Wait successful. Count =  " + count));
                 continueOn = true;
             }
             catch (org.openqa.selenium.StaleElementReferenceException e)
@@ -88,6 +86,7 @@ public class Utilities {
                 count++;
                 if (count == 16)
                     throw new Exception("StaleElementReferenceException not going away when waiting for element to become clickable.");
+
                 // Do not remove
                 Thread.sleep(250);
             }
@@ -99,6 +98,7 @@ public class Utilities {
     }
 
     private static void waitForWebElementToBeClickable(WebElement webElement, int waitTimeInSeconds){
+
         Wait<WebDriver> wait_local;
         int sleepTimeOutMillis = 250;
         wait_local = new WebDriverWait(driver, waitTimeInSeconds, sleepTimeOutMillis);
@@ -252,7 +252,6 @@ public class Utilities {
         for (int count = 0; count < actualOptionCount; count++) {
             String optionText = actualDropdownElementSelect.getOptions().get(count).getText();
             actualOptionsList.add(optionText);
-            //System.out.println(count + " : " + optionText);
         }
         return actualOptionsList;
     }
@@ -339,7 +338,6 @@ public class Utilities {
             throw new Exception("WebDriver exception thrown every time we attempt to click this element");
     }
 
-
     ////////////////////////////////////////////////////////////////////////////////
     // Private methods
     ////////////////////////////////////////////////////////////////////////////////
@@ -353,6 +351,4 @@ public class Utilities {
         System.out.println("actualOptionCount :" + actualOptionCount);
         return actualOptionCount;
     }
-
-
 }
