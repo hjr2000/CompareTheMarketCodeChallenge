@@ -20,7 +20,7 @@ public class ElectricitySupplierPage {
 
     public void enterDateOfMostRecentBill() {
 
-        // Enhancement - automatically populate this field with the first day of the current month so that the test remains realistic as time passes
+        // Enhancement - we could enhance this functionality to automatically populate this field with the first day of the current month so that the test remains realistic as time passes
         driver.findElement(By.cssSelector("#EnergyComparison_HaveBill_YourEnergy_YourElectricity_DateOfPurchase_Day")).sendKeys("01");
         driver.findElement(By.cssSelector("#EnergyComparison_HaveBill_YourEnergy_YourElectricity_DateOfPurchase_Month")).sendKeys("08");
         driver.findElement(By.cssSelector("#EnergyComparison_HaveBill_YourEnergy_YourElectricity_DateOfPurchase_Year")).sendKeys("2020");

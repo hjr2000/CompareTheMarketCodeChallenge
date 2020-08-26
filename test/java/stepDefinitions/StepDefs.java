@@ -153,6 +153,34 @@ public class StepDefs {
 		Utilities.waitforTextToAppear(textToFind);
 	}
 
+	@When("I populate the Energy Journey start page with standard information")
+	public void iPopulateTheEnergyJourneyStartPageWithStandardInformation() throws Exception {
+
+		iSubmitMyPostcode();
+		iSelectElectricityOnlyForThePurposesOfPriceComparison();
+		iSelectTheFirstSupplierShown();
+		iMoveOntoTheNextPage();
+	}
+
+	@And("I populate the Electricity Tariff page with standard information using {int} kwh as my monthly electricity usage")
+	public void iPopulateTheElectricityTariffPageWithStandardInformationWithKwhAsMyMonthlyElectricityUsage(int kwhUsage) throws Exception {
+
+		iEnterKwhAsMyMonthlyElectricityUsage(kwhUsage);
+		iEnterADateOfMyMostRecentBill();
+		iMoveOntoTheYourDetailsPage();
+	}
+
+	@And("I populate the Your Details page with standard information using {string} as my email address")
+	public void iPopulateTheYourDetailsPageWithStandardInformationUsingAsMyEmailAddress(String emailAddress) throws Exception {
+
+		iSelectFixedTariff();
+		iSelectMonthlyDirectDebit();
+		iEnterAsMyEmailAddress(emailAddress);
+		iSelectDoNotContactAsMyContactPreference();
+		iSelectTheConfirmCheckBox();
+		iClickTheGoToPricesButton();
+	}
+
 	// The 'After' hook must be here in the StepDefs file or CucumberJVM will ignore it!
 
 	@After
@@ -161,4 +189,5 @@ public class StepDefs {
 		System.out.println("Teardown - closing Webdriver.");
 		driver.quit();
 	}
+
 }

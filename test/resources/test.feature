@@ -1,14 +1,22 @@
 Feature: Comparing Meerkats
 
-#Basic internet facing 'smoke test' - run this test first to make sure everything is functioning correctly
-
-Scenario: Running a Google search
-  Given I am on the google homepage
-  When I search for webdriver
-  Then the page title is as expected
+##################################################################################################################
+# Compare the Market Energy Journey Test
+##################################################################################################################
 
 @Runme
-Scenario: Running a test against Compare the Market
+Scenario: Running a test against Compare the Market - energy journey
+  Given I am on the Energy Journey homepage
+  When I populate the Energy Journey start page with standard information
+  And I populate the Electricity Tariff page with standard information using 2000 kwh as my monthly electricity usage
+  And I populate the Your Details page with standard information using "fake@fake.com" as my email address
+  Then I see that the section titled "Cheapest switchable tariff" is present
+
+##################################################################################################################
+# Compare the Market Energy Journey Test - identical to the test above but using verbose Gherkin
+##################################################################################################################
+
+Scenario: Running a test against Compare the Market - energy journey - suboptimal gherkin
   Given I am on the Energy Journey homepage
   When I submit my postcode
   And I select electricity only for the purposes of price comparison
@@ -25,16 +33,11 @@ Scenario: Running a test against Compare the Market
   And I click the Go To Prices button
   Then I see that the section titled "Cheapest switchable tariff" is present
 
-# Enhancement - random journey generator
-# Table driven journey
-# Condensed GWT for readability - yes it's an antipattern. Sort of. Add link to Cuke page.
-# Standard set of test data for fully deterministic tariff results - but full tariff engine should be checked at API level. Obtaining data from the results looks difficult!
-# Guarantee of being able to always select the same supplier each time will require more code but would need to be done for the real thing.
-# Note: biz rules for confirm checkbox unknown so have dealt with both cases
-# Date used for most recent bill could be automatically populated with the first of the current month and year so that the test remains realistic
-# Consider whether there would be any benefit to using dependency injection
-# Assertions?
-# Commonly used standard data e.g. postcode hived off into a properties file.
-# Reliability - this test is 100% reliable it seems, not an easy feat to achieve with Selenium. Why Se? x-browser. Can use with Bstack (inc devices etc), Applitools
-# Plug in Selenide - makes Selenium actually usable.
-# Explanation of the utilities etc, deal with common pain in the backside Selenium problems. Unused methods part of my 'reference' repo.
+##################################################################################################################
+#Basic internet facing 'smoke test' - run this test if there is an issue with the CTM test to confirm all is well
+##################################################################################################################
+
+Scenario: Running a Google search
+  Given I am on the google homepage
+  When I search for webdriver
+  Then the page title is as expected
